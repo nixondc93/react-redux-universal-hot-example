@@ -12,6 +12,7 @@ import {
     Survey,
     NotFound,
     Pagination,
+    Weather
   } from 'containers';
 
 export default (store) => {
@@ -47,6 +48,7 @@ export default (store) => {
       </Route>
 
       { /* Routes */ }
+      <Route path="weather" component={Weather}/>
       <Route path="about" component={About}/>
       <Route path="login" component={Login}/>
       <Route path="pagination" component={Pagination}/>

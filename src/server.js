@@ -11,6 +11,8 @@ import ApiClient from './helpers/ApiClient';
 import Html from './helpers/Html';
 import PrettyError from 'pretty-error';
 import http from 'http';
+// import axios from 'axios';
+const axios = require('axios');
 
 import { match } from 'react-router';
 import { syncHistoryWithStore } from 'react-router-redux';
@@ -44,6 +46,16 @@ app.use('/ws', (req, res) => {
 
 server.on('upgrade', (req, socket, head) => {
   proxy.ws(req, socket, head);
+});
+
+app.get('/motherfucker', (req, res)=>{
+  res.send('HERE!!!!');
+});
+
+app.use('/getweather', (req, res)=>{
+   axios.get('http://api.openweathermap.org/data/2.5/weather?zip=94109,us&APPID=de06ccd9c984fc33335ea22c4583c2ae').then(function(response) {
+       res.json(response.data.weather[0].description);
+ });
 });
 
 // added the error handling to avoid https://github.com/nodejitsu/node-http-proxy/issues/527
@@ -114,6 +126,7 @@ if (config.port) {
     if (err) {
       console.error(err);
     }
+    console.log()
     console.info('----\n==> ✅  %s is running, talking to API server on %s.', config.app.title, config.apiPort);
     console.info('==> 💻  Open http://%s:%s in a browser to view the app.', config.host, config.port);
   });
